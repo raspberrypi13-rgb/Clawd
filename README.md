@@ -1,39 +1,42 @@
-# 🦀 Clawd.exe — 진짜 단독 실행파일
+# 🦀 Clawd.exe 만드는 법
 
-Python, Node.js, 아무것도 설치 안 해도 됩니다.  
-GitHub에 파일 올리면 자동으로 `.exe` 만들어줍니다.
+## 순서
+
+### 1. 저장소 만들기
+https://github.com → 우상단 **+** → **New repository**  
+이름: `clawd` / Public → **Create repository**
 
 ---
 
-## 📦 Clawd.exe 받는 법 (딱 4단계)
+### 2. clawd.py 업로드
+저장소 첫 페이지 → **"uploading an existing file"** 클릭  
+→ `clawd.py` 드래그앤드롭 → **Commit changes**
 
-### 1. GitHub 저장소 만들기
-https://github.com → 우상단 **+** → **New repository**  
-이름: `clawd` / **Public** 선택 / **Create repository**
+---
 
-### 2. 파일 업로드
-저장소 페이지에서 **"uploading an existing file"** 클릭  
-→ 이 zip 압축 풀고 **안의 파일 전부** 드래그앤드롭  
-→ **Commit changes**
+### 3. build.yml 만들기 ← 핵심!
 
-> ⚠️ `.github/workflows/build.yml` 파일 포함 필수!
+저장소 첫 페이지 → **"creating a new file"** 클릭
 
-### 3. 빌드 기다리기 (약 5~8분)
+**파일 이름 입력칸**에 아래를 그대로 입력:
+
+    .github/workflows/build.yml
+
+> `/` 입력할 때마다 폴더가 자동 생성됩니다
+
+**내용 입력칸**에 `build.yml.txt` 파일 내용을 복붙 → **Commit changes**
+
+---
+
+### 4. 빌드 대기 (5~8분)
 저장소 상단 **Actions 탭** → 초록 체크 뜰 때까지 대기
 
-### 4. 다운로드
-저장소 우측 **Releases** → **Clawd.exe** 클릭 → 더블클릭! 🎉
+---
+
+### 5. 다운로드
+저장소 우측 **Releases** → `Clawd.exe` 다운로드 → 더블클릭! 🎉
 
 ---
 
-## 📁 파일 구조
-```
-clawd/
-├── .github/workflows/build.yml   ← 자동 빌드 설정
-├── clawd.py                      ← HTML 내장된 Python 앱
-└── README.md
-```
-
-## ✅ 요구사항
-- Windows 10 / 11 (64-bit)
-- GitHub 계정 (무료)
+> Windows 10/11 기본 내장 Edge WebView2 사용.  
+> Python, Node.js 설치 불필요.

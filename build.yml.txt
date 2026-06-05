@@ -1,0 +1,53 @@
+name: Build Clawd.exe
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install pywebview pyinstaller
+
+      - name: Build standalone .exe
+        run: |
+          pyinstaller --onefile --noconsole --name Clawd `
+            --hidden-import webview `
+            --hidden-import webview.platforms.edgechromium `
+            --collect-all webview `
+            clawd.py
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Clawd-exe
+          path: dist/Clawd.exe
+          retention-days: 90
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.0.${{ github.run_number }}
+          name: "🦀 Clawd Desktop v1.0.${{ github.run_number }}"
+          body: |
+            ## 🦀 Clawd Desktop
+
+            **설치 불필요 — Clawd.exe 다운로드 후 더블클릭!**
+
+            - Windows 10 / 11 (64-bit)
+            - Edge WebView2 기반 (Windows 기본 내장)
+            - Python, Node.js 아무것도 설치 불필요
+          files: dist/Clawd.exe
+          draft: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
